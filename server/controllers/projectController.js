@@ -82,12 +82,10 @@ export const createProject = async (req, res) => {
       },
     });
 
-    res
-      .status(201)
-      .json({
-        project: projectWithMembers,
-        message: "Project created successfully",
-      });
+    res.status(201).json({
+      project: projectWithMembers,
+      message: "Project created successfully",
+    });
   } catch (error) {
     console.error("Error creating project:", error);
     res.status(500).json({ message: error.code || error.message });
@@ -96,6 +94,62 @@ export const createProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   try {
+    const { userId } = await req.auth();
+    const {
+      id,
+      workspaceId,
+      name,
+      description,
+      status,
+      start_date,
+      end_date,
+      team_members,
+      team_lead,
+      priority,
+      progress,
+    } = req.body;
+
+    const workspace = await prisma.workspace.findUnique({
+      where: { id: workspaceId },
+      include: { members: { include: { user: true } } },
+    });
+
+    if (!workspace) {
+      return res.status(404).json({ message: "Workspace not found" });
+    }
+    if (
+      !workspace.members.some(
+        (member) => member.userId === userId && member.role === "ADMIN"
+      )
+    ) {
+      const project = await prisma.project.findUnique({
+        where: { id: id },
+      });
+      if (!project) {
+        return res.status(404).json({ message: "Project not found" });
+      } else if (project.team_lead !== userId) {
+        return res.status(403).json({
+          message:
+            "You do not have permission to update a project in this workspace",
+        });
+      }
+    }
+
+    const project = await prisma.project.update({
+      where: { id: id },
+      data: {
+        workspaceId,
+        name,
+        description,
+        status,
+        priority,
+        progress,
+        start_date: start_date ? new Date(start_date) : null,
+        end_date: end_date ? new Date(end_date) : null,
+      },
+    });
+
+    res.status(200).json({ project, message: "Project updated successfully" });
   } catch (error) {
     console.error("Error updating member:", error);
     res.status(500).json({ message: error.code || error.message });
