@@ -4,7 +4,6 @@ import prisma from "../configs/prisma.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "project-management" });
 
-// Inngest function to save user data to the database
 const syncUserCreation = inngest.createFunction(
   { id: "sync-user-from-clerk" },
   { event: "clerk/user.created" },
@@ -21,7 +20,6 @@ const syncUserCreation = inngest.createFunction(
   }
 );
 
-// Inngest function to delete user data from the database
 const syncUserDeletion = inngest.createFunction(
   { id: "delete-user-with-clerk" },
   { event: "clerk/user.deleted" },
@@ -35,7 +33,6 @@ const syncUserDeletion = inngest.createFunction(
   }
 );
 
-// Inngest function to update user data from the database
 const syncUserUpdation = inngest.createFunction(
   { id: "update-user-from-clerk" },
   { event: "clerk/user.updated" },
@@ -73,6 +70,25 @@ const syncWorkspaceCreation = inngest.createFunction(
         userId: data.created_by,
         workspaceId: data.id,
         role: "ADMIN",
+      },
+    });
+  }
+);
+
+const syncWorkspaceUpdation = inngest.createFunction(
+  { id: "update-workspace-from-clerk" },
+  { event: "clerk/organization.updated" },
+  async ({ event }) => {
+    const { data } = event;
+    await prisma.workspace.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        name: data.name,
+        slug: data.slug,
+        ownerId: data.created_by,
+        image_url: data.image_url,
       },
     });
   }
