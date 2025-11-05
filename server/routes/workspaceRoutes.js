@@ -3,10 +3,11 @@ import {
   addMember,
   getUserWorkspaces,
 } from "../controllers/workspaceController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const workspaceRouter = express.Router();
 
-workspaceRouter.get("/", getUserWorkspaces);
-workspaceRouter.post("/add-member", addMember);
+workspaceRouter.get("/", protect, getUserWorkspaces);
+workspaceRouter.post("/add-member", protect, addMember);
 
 export default workspaceRouter;
