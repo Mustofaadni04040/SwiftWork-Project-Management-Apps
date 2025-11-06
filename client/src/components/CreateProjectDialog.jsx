@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { XIcon } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import api from "../configs/api";
+import { useAuth } from "@clerk/clerk-react";
+import { addProject } from "../features/workspaceSlice";
 
 const CreateProjectDialog = ({ isDialogOpen, setIsDialogOpen }) => {
   const { currentWorkspace } = useSelector((state) => state.workspace);
-
+  const { getToken } = useAuth();
+  const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -17,10 +23,35 @@ const CreateProjectDialog = ({ isDialogOpen, setIsDialogOpen }) => {
     progress: 0,
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      if (!formData.team_lead) {
+        return toast.error("Please select a project lead.");
+      }
+      const { data } = await api.post(
+        "/api/projects",
+        {
+          workspaceId: currentWorkspace.id,
+          ...formData,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+
+      dispatch(addProject(data.project));
+      toast.success("Project created successfully.");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsSubmitting(false);
+      setIsDialogOpen(false);
+    }
   };
 
   const removeTeamMember = (email) => {
@@ -230,7 +261,7 @@ const CreateProjectDialog = ({ isDialogOpen, setIsDialogOpen }) => {
             </button>
             <button
               disabled={isSubmitting || !currentWorkspace}
-              className="px-4 py-2 rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 text-white dark:text-zinc-200"
+              className="px-4 py-2 rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 text-white dark:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Creating..." : "Create Project"}
             </button>
