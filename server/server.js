@@ -7,6 +7,7 @@ import { inngest, functions } from "./inngest/index.js";
 import workspaceRouter from "./routes/workspaceRoutes.js";
 import projectRouter from "./routes/projectRoutes.js";
 import taskRouter from "./routes/taskRoutes.js";
+import commentRouter from "./routes/commentRoutes.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/workspaces", workspaceRouter);
 app.use("/api/projects", projectRouter);
 app.use("/api/tasks", taskRouter);
+app.use("/api/comments", commentRouter);
 
 const PORT = process.env.PORT || 5000;
 
