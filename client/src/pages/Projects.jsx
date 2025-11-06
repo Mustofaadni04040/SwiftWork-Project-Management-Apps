@@ -65,7 +65,7 @@ export default function Projects() {
         </div>
         <button
           onClick={() => setIsDialogOpen(true)}
-          className="flex items-center px-5 py-2 text-sm rounded bg-gradient-to-br from-blue-500 to-blue-600 text-white hover:opacity-90 transition"
+          className="flex items-center px-5 py-2 text-sm rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 text-white hover:opacity-90 transition"
         >
           <Plus className="size-4 mr-2" /> New Project
         </button>
@@ -82,7 +82,7 @@ export default function Projects() {
           <input
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
-            className="w-full pl-10 text-sm pr-4 py-2 rounded-lg border border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-400 focus:border-blue-500 outline-none"
+            className="w-full pl-10 text-sm pr-4 py-2 rounded-lg border border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-400 focus:border-[#0b996f] outline-none"
             placeholder="Search projects..."
           />
         </div>
@@ -125,7 +125,7 @@ export default function Projects() {
             </p>
             <button
               onClick={() => setIsDialogOpen(true)}
-              className="flex items-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mx-auto text-sm"
+              className="flex items-center gap-1.5 bg-[#0b996f] hover:bg-[#0b996f]/80 text-white px-4 py-2 rounded mx-auto text-sm"
             >
               <Plus className="size-4" />
               Create Project

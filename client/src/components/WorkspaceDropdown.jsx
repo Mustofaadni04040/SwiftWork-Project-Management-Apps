@@ -94,7 +94,7 @@ function WorkspaceDropdown() {
                   </p>
                 </div>
                 {currentWorkspace?.id === organization?.id && (
-                  <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-[#0b996f] dark:text-[#0b996f]/90 flex-shrink-0" />
                 )}
               </div>
             ))}
@@ -109,7 +109,7 @@ function WorkspaceDropdown() {
             }}
             className="p-2 cursor-pointer rounded group hover:bg-gray-100 dark:hover:bg-zinc-800"
           >
-            <p className="flex items-center text-xs gap-2 my-1 w-full text-blue-600 dark:text-blue-400 group-hover:text-blue-500 dark:group-hover:text-blue-300">
+            <p className="flex items-center text-xs gap-2 my-1 w-full text-[#0b996f] dark:text-[#0b996f]/90 group-hover:text-[#0b996f] dark:group-hover:text-[#0b996f]/90">
               <Plus className="w-4 h-4" /> Create Workspace
             </p>
           </div>
