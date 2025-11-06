@@ -43,7 +43,7 @@ const Team = () => {
         </div>
         <button
           onClick={() => setIsDialogOpen(true)}
-          className="flex items-center px-5 py-2 rounded text-sm bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 hover:opacity-90 text-white transition"
+          className="flex items-center px-5 py-2 rounded text-sm bg-gradient-to-br from-[#0b996f] to-[#0b996f]/90 hover:opacity-90 text-white transition"
         >
           <UserPlus className="w-4 h-4 mr-2" /> Invite Member
         </button>

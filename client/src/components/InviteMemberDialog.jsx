@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Mail, UserPlus } from "lucide-react";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { useOrganization } from "@clerk/clerk-react";
 
 const InviteMemberDialog = ({ isDialogOpen, setIsDialogOpen }) => {
   const currentWorkspace = useSelector(
     (state) => state.workspace?.currentWorkspace || null
   );
+  const { organization } = useOrganization();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -14,13 +17,28 @@ const InviteMemberDialog = ({ isDialogOpen, setIsDialogOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await organization?.inviteMember({
+        emailAddress: formData.email,
+        role: formData.role,
+      });
+
+      toast.success("Invitation sent successfully.");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsSubmitting(false);
+      setIsDialogOpen(false);
+    }
   };
 
   if (!isDialogOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/20 dark:bg-black/50 backdrop-blur flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl p-6 w-full max-w-md max-w-lg max-h-[600px] overflow-y-auto no-scrollbar text-zinc-900 dark:text-zinc-200">
+      <div className="bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl p-6 w-full max-w-md max-h-[600px] overflow-y-auto no-scrollbar text-zinc-900 dark:text-zinc-200 z-50">
         {/* Header */}
         <div className="mb-4">
           <h2 className="text-xl font-bold flex items-center gap-2">

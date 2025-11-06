@@ -12,6 +12,7 @@ import {
   CreateOrganization,
 } from "@clerk/clerk-react";
 import { fetchWorkspaces } from "../features/workspaceSlice";
+import TextLoader from "../components/TextLoader";
 
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -39,12 +40,7 @@ const Layout = () => {
     );
   }
 
-  if (loading)
-    return (
-      <div className="flex items-center justify-center h-screen bg-white dark:bg-zinc-950">
-        <Loader2Icon className="size-7 text-[#0b996f] animate-spin" />
-      </div>
-    );
+  if (loading) return <TextLoader text={"SwiftWork..."} />;
 
   if (user && workspaces.length === 0) {
     return (
