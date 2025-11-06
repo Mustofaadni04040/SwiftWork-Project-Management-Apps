@@ -5,6 +5,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { serve } from "inngest/express";
 import { inngest, functions } from "./inngest/index.js";
 import workspaceRouter from "./routes/workspaceRoutes.js";
+import projectRouter from "./routes/projectRoutes.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => res.send("Project Management API is running"));
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.use("/api/workspaces", workspaceRouter);
+app.use("/api/projects", projectRouter);
 
 const PORT = process.env.PORT || 5000;
 
