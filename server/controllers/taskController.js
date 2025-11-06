@@ -58,7 +58,104 @@ export const createTask = async (req, res) => {
       message: "Task created successfully",
     });
   } catch (error) {
-    console.error("Error fetching user workspaces:", error);
+    console.error("Error creating task:", error);
+    res.status(500).json({ message: error.code || error.message });
+  }
+};
+
+export const updateTask = async (req, res) => {
+  try {
+    const { userId } = await req.auth();
+    const {
+      projectId,
+      title,
+      description,
+      type,
+      status,
+      priority,
+      assigneeId,
+      due_date,
+    } = req.body;
+
+    const taskId = await prisma.task.findUnique({
+      where: { id: req.params.id },
+    });
+
+    if (!taskId) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    const project = await prisma.project.findUnique({
+      where: { id: taskId.projectId },
+      include: { members: { include: { user: true } } },
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    } else if (project.team_lead !== userId) {
+      return res.status(403).json({
+        message: "Only the project lead can update tasks to this project",
+      });
+    }
+
+    const updatedTask = await prisma.task.update({
+      where: { id: req.params.id },
+      data: {
+        projectId,
+        title,
+        description,
+        type,
+        status,
+        priority,
+        assigneeId,
+        due_date: due_date ? new Date(due_date) : null,
+      },
+    });
+
+    res.status(201).json({
+      task: updatedTask,
+      message: "Task updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating task:", error);
+    res.status(500).json({ message: error.code || error.message });
+  }
+};
+
+export const deleteTask = async (req, res) => {
+  try {
+    const { userId } = await req.auth();
+    const { taskIds } = req.body;
+    const tasks = await prisma.task.findMany({
+      where: { id: { in: taskIds } },
+    });
+
+    if (tasks.length === 0) {
+      return res.status(404).json({ message: "No tasks found to delete" });
+    }
+
+    const project = await prisma.project.findUnique({
+      where: { id: tasks[0].projectId },
+      include: { members: { include: { user: true } } },
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    } else if (project.team_lead !== userId) {
+      return res.status(403).json({
+        message: "Only the project lead can delete tasks to this project",
+      });
+    }
+
+    await prisma.task.deleteMany({
+      where: { id: { in: taskIds } },
+    });
+
+    res.status(201).json({
+      message: "Task deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting task:", error);
     res.status(500).json({ message: error.code || error.message });
   }
 };
