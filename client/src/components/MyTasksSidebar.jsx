@@ -6,13 +6,13 @@ import {
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 
 function MyTasksSidebar({ setIsSidebarOpen }) {
-  const user = { id: "user_1" };
-
   const { currentWorkspace } = useSelector((state) => state.workspace);
   const [showMyTasks, setShowMyTasks] = useState(false);
   const [myTasks, setMyTasks] = useState([]);
+  const { user } = useUser();
 
   const toggleMyTasks = () => setShowMyTasks((prev) => !prev);
 
