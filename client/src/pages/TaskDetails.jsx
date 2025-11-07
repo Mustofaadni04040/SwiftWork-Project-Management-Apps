@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CalendarIcon, MessageCircle, PenIcon } from "lucide-react";
 import { assets } from "../assets/assets";
+import { priorityTexts, typeIcons } from "../utils/utils";
 
 const TaskDetails = () => {
   const [searchParams] = useSearchParams();
@@ -17,6 +18,8 @@ const TaskDetails = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
+  const { icon: Icon, color } = typeIcons[task?.type] || {};
+  const { background, prioritycolor } = priorityTexts[task?.priority] || {};
 
   const { currentWorkspace } = useSelector((state) => state.workspace);
 
@@ -167,10 +170,15 @@ const TaskDetails = () => {
               <span className="px-2 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-300 text-xs">
                 {task.status}
               </span>
-              <span className="px-2 py-0.5 rounded bg-green-200 dark:bg-green-900 text-green-900 dark:text-green-300 text-xs">
+              <span
+                className={`flex items-center justify-center gap-2 px-2 py-0.5 rounded ${background} ${color} text-xs`}
+              >
+                {Icon && <Icon className={`size-4 ${color}`} />}
                 {task.type}
               </span>
-              <span className="px-2 py-0.5 rounded bg-green-200 dark:bg-emerald-900 text-green-900 dark:text-emerald-300 text-xs">
+              <span
+                className={`px-2 py-0.5 rounded ${background} ${prioritycolor} text-xs`}
+              >
                 {task.priority}
               </span>
             </div>
