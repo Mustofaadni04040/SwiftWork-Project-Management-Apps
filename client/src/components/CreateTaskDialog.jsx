@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
+import { useAuth } from "@clerk/clerk-react";
+import toast from "react-hot-toast";
+import api from "../configs/api";
+import { addTask } from "../features/workspaceSlice";
 
 export default function CreateTaskDialog({
   showCreateTask,
@@ -13,6 +17,8 @@ export default function CreateTaskDialog({
   );
   const project = currentWorkspace?.projects.find((p) => p.id === projectId);
   const teamMembers = project?.members || [];
+  const { getToken } = useAuth();
+  const dispatch = useDispatch();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,11 +33,46 @@ export default function CreateTaskDialog({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { data } = await api.post(
+        "/api/tasks",
+        {
+          ...formData,
+          workspaceId: currentWorkspace.id,
+          projectId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+
+      setFormData({
+        title: "",
+        description: "",
+        type: "TASK",
+        status: "TODO",
+        priority: "MEDIUM",
+        assigneeId: "",
+        due_date: "",
+      });
+      toast.success(data?.message);
+      dispatch(addTask(data?.task));
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsSubmitting(false);
+      setShowCreateTask(false);
+    }
   };
 
   return showCreateTask ? (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 dark:bg-black/60 backdrop-blur">
-      <div className="bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-lg shadow-lg w-full max-w-md max-w-lg max-h-[600px] overflow-y-auto no-scrollbar p-6 text-zinc-900 dark:text-white">
+      <div className="bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-lg shadow-lg w-full max-w-md max-h-[600px] overflow-y-auto no-scrollbar p-6 text-zinc-900 dark:text-white">
         <h2 className="text-xl font-bold mb-4">Create New Task</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -171,7 +212,7 @@ export default function CreateTaskDialog({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded px-5 py-2 text-sm bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 hover:opacity-90 text-white dark:text-zinc-200 transition"
+              className="rounded px-5 py-2 text-sm bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 hover:opacity-90 text-white dark:text-zinc-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Creating..." : "Create Task"}
             </button>
