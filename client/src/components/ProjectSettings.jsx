@@ -221,9 +221,13 @@ export default function ProjectSettings({ project }) {
                   className="flex items-center justify-between px-3 py-2 rounded dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-300"
                 >
                   <span> {member?.user?.email || "Unknown"} </span>
-                  {project.team_lead === member.user.id && (
-                    <span className="px-2 py-0.5 rounded-xs ring ring-zinc-200 dark:ring-zinc-600">
+                  {project.team_lead === member.user.id ? (
+                    <span className="flex items-center justify-center min-w-[85px] px-2 py-0.5 rounded-xs ring ring-[#0b996f]/10 dark:ring-[#0b996f]/30 bg-[#0b996f]/10 dark:bg-[#0b996f]/30 text-[#0b996f]">
                       Team Lead
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center min-w-[85px] px-2 py-0.5 rounded-xs ring ring-zinc-200 dark:ring-zinc-600">
+                      Member
                     </span>
                   )}
                 </div>

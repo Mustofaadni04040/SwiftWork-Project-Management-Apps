@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { Mail, UserPlus } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
+import toast from "react-hot-toast";
+import api from "../configs/api";
+import { fetchWorkspaces } from "../features/workspaceSlice";
 
 const AddProjectMember = ({ isDialogOpen, setIsDialogOpen }) => {
   const [searchParams] = useSearchParams();
+  const [email, setEmail] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
 
   const id = searchParams.get("id");
+  const { getToken } = useAuth();
+  const dispatch = useDispatch();
 
   const currentWorkspace = useSelector(
     (state) => state.workspace?.currentWorkspace || null
@@ -17,11 +25,30 @@ const AddProjectMember = ({ isDialogOpen, setIsDialogOpen }) => {
     (member) => member.user.email
   );
 
-  const [email, setEmail] = useState("");
-  const [isAdding, setIsAdding] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsAdding(true);
+
+    try {
+      await api.post(
+        `/api/projects/${id}/addMember`,
+        { email },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+
+      toast.success("Member added to this project.");
+      dispatch(fetchWorkspaces({ getToken }));
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsAdding(false);
+      setIsDialogOpen(false);
+    }
   };
 
   if (!isDialogOpen) return null;
@@ -92,7 +119,7 @@ const AddProjectMember = ({ isDialogOpen, setIsDialogOpen }) => {
             <button
               type="submit"
               disabled={isAdding || !currentWorkspace}
-              className="px-5 py-2 text-sm rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 hover:opacity-90 text-white disabled:opacity-50 transition"
+              className="px-5 py-2 text-sm rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 hover:opacity-90 text-white disabled:opacity-50 transition disabled:cursor-not-allowed"
             >
               {isAdding ? "Adding..." : "Add Member"}
             </button>
