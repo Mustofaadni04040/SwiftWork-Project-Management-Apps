@@ -91,7 +91,7 @@ export default function ProjectDetail() {
         </div>
         <button
           onClick={() => setShowCreateTask(true)}
-          className="flex items-center gap-2 px-5 py-2 text-sm rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 text-white"
+          className="flex items-center gap-2 px-5 py-2 text-sm rounded bg-gradient-to-br from-[#0b996f] to-[#0b996f]/90 text-white"
         >
           <PlusIcon className="size-4" />
           New Task

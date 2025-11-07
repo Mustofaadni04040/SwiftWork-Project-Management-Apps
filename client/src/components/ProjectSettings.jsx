@@ -2,8 +2,14 @@ import { format } from "date-fns";
 import { Plus, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import AddProjectMember from "./AddProjectMember";
+import { useDispatch } from "react-redux";
+import { useAuth } from "@clerk/clerk-react";
+import toast from "react-hot-toast";
+import api from "../configs/api";
+import { fetchWorkspaces } from "../features/workspaceSlice";
 
 export default function ProjectSettings({ project }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "New Website Launch",
     description: "Initial launch for new web platform.",
@@ -16,9 +22,29 @@ export default function ProjectSettings({ project }) {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { getToken } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    toast.loading("Updating project...");
+    try {
+      const { data } = await api.put(`/api/projects/${project.id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
+      setIsDialogOpen(false);
+      dispatch(fetchWorkspaces({ getToken }));
+      toast.dismissAll();
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast.dismissAll();
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -155,7 +181,7 @@ export default function ProjectSettings({ project }) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="ml-auto flex items-center text-sm justify-center gap-2 bg-gradient-to-br from-[#0b996f] to-[#0b996f]/90 text-white px-4 py-2 rounded"
+            className="ml-auto flex items-center text-sm justify-center gap-2 bg-gradient-to-br from-[#0b996f] to-[#0b996f]/90 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Save className="size-4" />{" "}
             {isSubmitting ? "Saving..." : "Save Changes"}

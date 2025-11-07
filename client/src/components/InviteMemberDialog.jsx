@@ -24,7 +24,9 @@ const InviteMemberDialog = ({ isDialogOpen, setIsDialogOpen }) => {
         role: formData.role,
       });
 
-      toast.success("Invitation sent successfully.");
+      toast.success(
+        "Invitation sent successfully, don't forget to check spam if you don't see it in your inbox."
+      );
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || error.message);
@@ -109,7 +111,7 @@ const InviteMemberDialog = ({ isDialogOpen, setIsDialogOpen }) => {
             <button
               type="submit"
               disabled={isSubmitting || !currentWorkspace}
-              className="px-5 py-2 rounded text-sm bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 text-white disabled:opacity-50 hover:opacity-90 transition"
+              className="px-5 py-2 rounded text-sm bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition"
             >
               {isSubmitting ? "Sending..." : "Send Invitation"}
             </button>
