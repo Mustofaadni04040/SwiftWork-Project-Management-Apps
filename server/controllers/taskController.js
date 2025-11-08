@@ -52,13 +52,34 @@ export const createTask = async (req, res) => {
 
     const taskWithAssignee = await prisma.task.findUnique({
       where: { id: task.id },
-      include: { assignee: true },
+      include: { assignee: true, project: true },
     });
 
     sendEmail({
-      to: "adnimustofa08@gmail.com",
-      subject: "Test Email",
-      body: "<p>Halo, ini percobaan.</p>",
+      to: taskWithAssignee.assignee.email,
+      subject: `New Task Assigned: ${taskWithAssignee.project.name}`,
+      body: `<div style="max-width: 600px; padding: 20px;">
+              <h2>Hi, ${taskWithAssignee.assignee.name}, 👋</h2>
+        
+              <p style="font-size: 16px; margin: 8px 0;">You have been assigned a new task in the project <strong style="font-size: 18px; font-weight: bold; color: #0b996f;">${
+                taskWithAssignee.project.name
+              }</strong> with title <strong style="font-size: 18px; font-weight: bold; color: #0b996f;">${
+        taskWithAssignee.title
+      }</strong>.</p>
+              
+              <div style="border: 1px solid #ddd; padding: 12px 16px; border-radius: 6px; margin-bottom: 30px;">
+                <p style="margin: 6px 0;"><strong>Description: </strong>${
+                  taskWithAssignee.description
+                }</p>
+                <p style="margin: 6px 0;"><strong>Due Date: </strong>${new Date(
+                  taskWithAssignee.due_date
+                ).toLocaleDateString()}</p>
+              </div>
+              
+              <a href="${origin}" style="background-color: #0b996f; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px;">View Task</a>
+              
+              <p style="margin-top: 20px; font-size: 14px; color: #6C757D;">Please make sure to review and complete the task before the due date.</p>
+        </div>`,
     });
 
     await inngest.send({
