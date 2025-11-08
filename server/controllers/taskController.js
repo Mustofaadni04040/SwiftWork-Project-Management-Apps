@@ -1,3 +1,4 @@
+import sendEmail from "../configs/nodemailer.js";
 import prisma from "../configs/prisma.js";
 import { inngest } from "../inngest/index.js";
 
@@ -52,6 +53,12 @@ export const createTask = async (req, res) => {
     const taskWithAssignee = await prisma.task.findUnique({
       where: { id: task.id },
       include: { assignee: true },
+    });
+
+    sendEmail({
+      to: "adnimustofa08@gmail.com",
+      subject: "Test Email",
+      body: "<p>Halo, ini percobaan.</p>",
     });
 
     await inngest.send({

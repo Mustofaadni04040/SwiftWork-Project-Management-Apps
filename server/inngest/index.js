@@ -1,6 +1,6 @@
 import { Inngest } from "inngest";
 import prisma from "../configs/prisma.js";
-import sendMail from "../configs/nodemailer.js";
+import sendEmail from "../configs/nodemailer.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "project-management" });
@@ -134,7 +134,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
       include: { assignee: true, project: true },
     });
 
-    await sendMail({
+    await sendEmail({
       to: task.assignee.email,
       subject: `New Task Assigned: ${task.project.name}`,
       body: `<div style="max-width: 600px; padding: 20px;">
@@ -177,7 +177,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
 
         if (task.status !== "DONE") {
           await step.run("send-task-reminder-email", async () => {
-            await sendMail({
+            await sendEmail({
               to: task.assignee.email,
               subject: `Reminder for ${task.project.name}`,
               body: `<div style="max-width: 600px; padding: 20px;">

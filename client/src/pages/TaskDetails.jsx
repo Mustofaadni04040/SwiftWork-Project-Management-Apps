@@ -171,7 +171,7 @@ const TaskDetails = () => {
                 {task.status}
               </span>
               <span
-                className={`flex items-center justify-center gap-2 px-2 py-0.5 rounded ${background} ${color} text-xs`}
+                className={`flex items-center justify-center gap-2 px-2 py-0.5 rounded ${color} text-xs`}
               >
                 {Icon && <Icon className={`size-4 ${color}`} />}
                 {task.type}
