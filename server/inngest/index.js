@@ -140,9 +140,9 @@ const sendTaskAssignmentEmail = inngest.createFunction(
       body: `<div style="max-width: 600px; padding: 20px;">
               <h2>Hi, ${task.assignee.name}, 👋</h2>
         
-              <p style="font-size: 16px; margin: 8px 0;">You have been assigned a new task in the project <strong style="font-size: 18px; font-weight: bold; color: #007BFF;">${
+              <p style="font-size: 16px; margin: 8px 0;">You have been assigned a new task in the project <strong style="font-size: 18px; font-weight: bold; color: #0b996f;">${
                 task.project.name
-              }</strong> with title <strong style="font-size: 18px; font-weight: bold; color: #007BFF;">${
+              }</strong> with title <strong style="font-size: 18px; font-weight: bold; color: #0b996f;">${
         task.title
       }</strong>.</p>
               
@@ -155,7 +155,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
                 ).toLocaleDateString()}</p>
               </div>
               
-              <a href="${origin}" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px;">View Task</a>
+              <a href="${origin}" style="background-color: #0b996f; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px;">View Task</a>
               
               <p style="margin-top: 20px; font-size: 14px; color: #6C757D;">Please make sure to review and complete the task before the due date.</p>
         </div>`,
@@ -183,9 +183,9 @@ const sendTaskAssignmentEmail = inngest.createFunction(
               body: `<div style="max-width: 600px; padding: 20px;">
                       <h2>Hi, ${task.assignee.name}, 👋</h2>
                       
-                      <p style="font-size: 16px; margin: 8px 0;">You have been assigned a new task in the project <strong style="font-size: 18px; font-weight: bold; color: #007BFF;">${
+                      <p style="font-size: 16px; margin: 8px 0;">You have been assigned a new task in the project <strong style="font-size: 18px; font-weight: bold; color: #0b996f;">${
                         task.project.name
-                      }</strong> with title <strong style="font-size: 18px; font-weight: bold; color: #007BFF;">${
+                      }</strong> with title <strong style="font-size: 18px; font-weight: bold; color: #0b996f;">${
                 task.title
               }</strong>.</p>
                       
@@ -198,7 +198,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
                         ).toLocaleDateString()}</p>
                       </div>
                       
-                      <a href="${origin}" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px;">View Task</a>
+                      <a href="${origin}" style="background-color: #0b996f; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 16px;">View Task</a>
                       
                       <p style="margin-top: 20px; font-size: 14px; color: #6C757D;">Please make sure to review and complete the task before the due date.</p>
                     </div>`,
