@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { deleteTask, updateTask } from "../features/workspaceSlice";
 import { CalendarIcon, Trash, XIcon } from "lucide-react";
 import { priorityTexts, typeIcons } from "../utils/utils";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../configs/api";
 
 const ProjectTasks = ({ tasks }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTasks, setSelectedTasks] = useState([]);
-
+  const { getToken } = useAuth();
   const [filters, setFilters] = useState({
     status: "",
     type: "",
@@ -43,11 +45,19 @@ const ProjectTasks = ({ tasks }) => {
   };
 
   const handleStatusChange = async (taskId, newStatus) => {
+    const token = await getToken();
     try {
       toast.loading("Updating status...");
 
-      //  Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await api.put(
+        `/api/tasks/${taskId}`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       let updatedTask = structuredClone(tasks.find((t) => t.id === taskId));
       updatedTask.status = newStatus;
