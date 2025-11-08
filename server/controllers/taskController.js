@@ -103,16 +103,7 @@ export const createTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { userId } = await req.auth();
-    const {
-      projectId,
-      title,
-      description,
-      type,
-      status,
-      priority,
-      assigneeId,
-      due_date,
-    } = req.body;
+    const { status } = req.body;
 
     const taskId = await prisma.task.findUnique({
       where: { id: req.params.id },
@@ -138,14 +129,7 @@ export const updateTask = async (req, res) => {
     const updatedTask = await prisma.task.update({
       where: { id: req.params.id },
       data: {
-        projectId,
-        title,
-        description,
-        type,
         status,
-        priority,
-        assigneeId,
-        due_date: due_date ? new Date(due_date) : null,
       },
     });
 
