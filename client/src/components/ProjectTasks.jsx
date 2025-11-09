@@ -3,17 +3,19 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteTask, updateTask } from "../features/workspaceSlice";
+import { updateTask } from "../features/workspaceSlice";
 import { CalendarIcon, Trash, XIcon } from "lucide-react";
 import { priorityTexts, typeIcons } from "../utils/utils";
 import { useAuth } from "@clerk/clerk-react";
 import api from "../configs/api";
+import DeleteTaskDialog from "./DeleteTaskDialog";
 
 const ProjectTasks = ({ tasks }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTasks, setSelectedTasks] = useState([]);
   const { getToken } = useAuth();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filters, setFilters] = useState({
     status: "",
     type: "",
@@ -65,28 +67,6 @@ const ProjectTasks = ({ tasks }) => {
 
       toast.dismissAll();
       toast.success("Task status updated successfully");
-    } catch (error) {
-      toast.dismissAll();
-      toast.error(error?.response?.data?.message || error.message);
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      const confirm = window.confirm(
-        "Are you sure you want to delete the selected tasks?"
-      );
-      if (!confirm) return;
-
-      toast.loading("Deleting tasks...");
-
-      //  Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      dispatch(deleteTask(selectedTasks));
-
-      toast.dismissAll();
-      toast.success("Tasks deleted successfully");
     } catch (error) {
       toast.dismissAll();
       toast.error(error?.response?.data?.message || error.message);
@@ -157,13 +137,21 @@ const ProjectTasks = ({ tasks }) => {
         )}
 
         {selectedTasks.length > 0 && (
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="px-3 py-1 flex items-center gap-2 rounded bg-gradient-to-br from-indigo-400 to-indigo-500 text-zinc-100 dark:text-zinc-200 text-sm transition-colors"
-          >
-            <Trash className="size-3" /> Delete
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={() => setIsDialogOpen(true)}
+              className="px-3 py-1 flex items-center gap-2 rounded bg-gradient-to-br from-indigo-400 to-indigo-500 text-zinc-100 dark:text-zinc-200 text-sm transition-colors"
+            >
+              <Trash className="size-3" /> Delete
+            </button>
+            <DeleteTaskDialog
+              selectedTasks={selectedTasks}
+              isDialogOpen={isDialogOpen}
+              setIsDialogOpen={setIsDialogOpen}
+              setSelectedTasks={setSelectedTasks}
+            />
+          </div>
         )}
       </div>
 
