@@ -1,7 +1,9 @@
+import { getAuth } from "@clerk/express";
+
 export const protect = async (req, res, next) => {
   try {
-    const { userId } = await req.auth();
-    if (!userId) {
+    const { sessionId } = getAuth(req);
+    if (!sessionId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 

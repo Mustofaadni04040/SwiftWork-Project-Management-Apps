@@ -47,9 +47,9 @@ const ProjectTasks = ({ tasks }) => {
   };
 
   const handleStatusChange = async (taskId, newStatus) => {
-    const token = await getToken();
     try {
       toast.loading("Updating status...");
+      const token = await getToken();
 
       await api.put(
         `/api/tasks/${taskId}`,
@@ -109,7 +109,7 @@ const ProjectTasks = ({ tasks }) => {
               key={name}
               name={name}
               onChange={handleFilterChange}
-              className=" border not-dark:bg-white border-zinc-300 dark:border-zinc-800 outline-none px-3 py-1 rounded text-sm text-zinc-900 dark:text-zinc-200"
+              className="border not-dark:bg-white border-zinc-300 dark:border-zinc-800 outline-none px-3 py-1 rounded text-sm text-zinc-900 dark:text-zinc-200"
             >
               {options[name].map((opt, idx) => (
                 <option key={idx} value={opt.value}>

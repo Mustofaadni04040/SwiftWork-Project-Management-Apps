@@ -152,8 +152,6 @@ export const deleteTask = async (req, res) => {
       where: { id: { in: taskIds } },
     });
 
-    console.log(tasks, "tasks");
-
     if (tasks.length === 0) {
       return res.status(404).json({ message: "No tasks found to delete" });
     }
