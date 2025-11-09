@@ -32,6 +32,7 @@ export default function DeleteTaskDialog({
       toast.loading("Deleting tasks...");
 
       dispatch(deleteTask(selectedTasks));
+      setSelectedTasks([]);
       toast.dismissAll();
       toast.success("Tasks deleted successfully");
     } catch (error) {
