@@ -3,6 +3,13 @@ import { useEffect, useRef } from "react";
 
 export default function SearchDialog({ isDialogOpen, setIsDialogOpen }) {
   const modalRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (isDialogOpen) {
+      inputRef.current.focus();
+    }
+  }, [isDialogOpen]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -28,12 +35,13 @@ export default function SearchDialog({ isDialogOpen, setIsDialogOpen }) {
         ref={modalRef}
       >
         {/* Search Input */}
-        <div className="relative flex-1 max-w-sm">
-          <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-400 size-3.5" />
+        <div className="flex items-center gap-1 max-w-sm">
+          <SearchIcon className="text-gray-400 dark:text-zinc-400 size-3.5" />
           <input
             type="text"
             placeholder="Search projects, tasks..."
             className="pl-8 pr-4 py-2 w-full bg-white dark:bg-zinc-900 border-none text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-400 focus:outline-none"
+            ref={inputRef}
           />
         </div>
       </div>
