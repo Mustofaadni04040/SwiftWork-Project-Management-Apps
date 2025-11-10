@@ -141,7 +141,7 @@ export default function ProjectDetail() {
 
       {/* Tabs */}
       <div>
-        <div className="inline-flex flex-wrap max-sm:grid grid-cols-3 gap-2 border border-zinc-200 dark:border-zinc-800 rounded overflow-hidden">
+        <div className="inline-flex flex-wrap max-sm:grid grid-cols-3 border gap-2 bg-[#f4f6f8] dark:bg-zinc-800/80 border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
           {[
             { key: "tasks", label: "Tasks", icon: FileStackIcon },
             { key: "calendar", label: "Calendar", icon: CalendarIcon },
@@ -154,9 +154,9 @@ export default function ProjectDetail() {
                 setActiveTab(tabItem.key);
                 setSearchParams({ id: id, tab: tabItem.key });
               }}
-              className={`flex items-center gap-2 px-4 py-2 text-sm transition-all ${
+              className={`flex items-center px-4 py-1 m-1 text-sm rounded-lg transition-all ${
                 activeTab === tabItem.key
-                  ? "bg-zinc-100 dark:bg-zinc-800/80"
+                  ? "bg-white text-[#0b996f] dark:bg-zinc-800/80"
                   : "hover:bg-zinc-50 dark:hover:bg-zinc-700"
               }`}
             >

@@ -1,13 +1,7 @@
 import { SearchIcon, PanelLeft } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../features/themeSlice";
-import { MoonIcon, SunIcon } from "lucide-react";
 import { UserButton } from "@clerk/clerk-react";
 
 const Navbar = ({ setIsSidebarOpen }) => {
-  const dispatch = useDispatch();
-  const { theme } = useSelector((state) => state.theme);
-
   return (
     <div className="w-full bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 px-6 xl:px-16 py-3 flex-shrink-0">
       <div className="flex items-center justify-between max-w-6xl mx-auto">
@@ -33,22 +27,8 @@ const Navbar = ({ setIsSidebarOpen }) => {
         </div>
 
         {/* Right section */}
-        <div className="flex items-center gap-3">
-          {/* Theme Toggle */}
-          <button
-            onClick={() => dispatch(toggleTheme())}
-            className="size-8 flex items-center justify-center bg-white dark:bg-zinc-800 shadow rounded-lg transition hover:scale-105 active:scale-95"
-          >
-            {theme === "light" ? (
-              <MoonIcon className="size-4 text-gray-800 dark:text-gray-200" />
-            ) : (
-              <SunIcon className="size-4 text-yellow-400" />
-            )}
-          </button>
-
-          {/* User Button */}
-          <UserButton />
-        </div>
+        {/* User Button */}
+        <UserButton />
       </div>
     </div>
   );
