@@ -4,12 +4,12 @@ import {
   deleteTask,
   updateTask,
 } from "../controllers/taskController.js";
-import { protect } from "../middlewares/authMiddleware.js";
+import { requireAuth } from "@clerk/express";
 
 const taskRouter = express.Router();
 
-taskRouter.post("/", protect, createTask);
-taskRouter.put("/:id", protect, updateTask);
-taskRouter.post("/delete", protect, deleteTask);
+taskRouter.post("/", requireAuth(), createTask);
+taskRouter.put("/:id", requireAuth(), updateTask);
+taskRouter.post("/delete", requireAuth(), deleteTask);
 
 export default taskRouter;

@@ -4,10 +4,11 @@ import {
   addComment,
   getCommentsByTask,
 } from "../controllers/commentController.js";
+import { requireAuth } from "@clerk/express";
 
 const commentRouter = express.Router();
 
-commentRouter.post("/", protect, addComment);
-commentRouter.get("/:taskId", protect, getCommentsByTask);
+commentRouter.post("/", requireAuth(), addComment);
+commentRouter.get("/:taskId", requireAuth(), getCommentsByTask);
 
 export default commentRouter;

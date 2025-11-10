@@ -113,9 +113,7 @@ export default function ProjectDetail() {
           },
           {
             label: "In Progress",
-            value: tasks.filter(
-              (t) => t.status === "IN_PROGRESS" || t.status === "TODO"
-            ).length,
+            value: tasks.filter((t) => t.status === "IN_PROGRESS").length,
             color: "text-amber-700 dark:text-amber-400",
           },
           {
