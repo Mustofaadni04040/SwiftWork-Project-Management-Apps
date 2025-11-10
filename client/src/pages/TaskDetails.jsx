@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CalendarIcon, MessageCircle, PenIcon } from "lucide-react";
-import { assets } from "../assets/assets";
 import { priorityTexts, typeIcons } from "../utils/utils";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import api from "../configs/api";
@@ -25,41 +24,25 @@ const TaskDetails = () => {
   const { currentWorkspace } = useSelector((state) => state.workspace);
   const { getToken } = useAuth();
 
-  const fetchComments = async () => {
-    if (!taskId) return;
-
-    try {
-      const token = await getToken();
-      const { data } = await api.get(`/api/comments/${taskId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setComments(data?.comments || []);
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || error.message);
-    }
-  };
-
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
 
     try {
       const token = await getToken();
       toast.loading("Adding comment...");
-
-      //  Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      const dummyComment = {
-        id: Date.now(),
-        user: { id: 1, name: "User", image: assets.profile_img_a },
-        content: newComment,
-        createdAt: new Date(),
-      };
-
-      setComments((prev) => [...prev, dummyComment]);
+      const { data } = await api.post(
+        "/api/comments",
+        {
+          taskId: task.id,
+          content: newComment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setComments((prev) => [...prev, data.comment]);
       setNewComment("");
       toast.dismissAll();
       toast.success("Comment added.");
@@ -89,14 +72,25 @@ const TaskDetails = () => {
   }, [currentWorkspace.projects, projectId, taskId]);
 
   useEffect(() => {
-    if (taskId && task) {
-      fetchComments();
-      const interval = setInterval(() => {
-        fetchComments();
-      }, 10000);
-      return () => clearInterval(interval);
-    }
-  }, [taskId, task]);
+    const fetchComments = async () => {
+      if (!taskId) return;
+
+      try {
+        const token = await getToken();
+        const { data } = await api.get(`/api/comments/${taskId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setComments(data?.comments || []);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || error.message);
+      }
+    };
+
+    fetchComments();
+  }, [taskId, task, getToken]);
 
   if (loading)
     return (
@@ -124,17 +118,17 @@ const TaskDetails = () => {
                   <div
                     key={comment.id}
                     className={`sm:max-w-4/5 dark:bg-gradient-to-br dark:from-zinc-800 dark:to-zinc-900 border border-gray-300 dark:border-zinc-700 p-3 rounded-md ${
-                      comment.user.id === user?.id ? "ml-auto" : "mr-auto"
+                      comment.user?.id === user?.id ? "ml-auto" : "mr-auto"
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1 text-sm text-gray-500 dark:text-zinc-400">
                       <img
-                        src={comment.user.image}
+                        src={comment.user?.image}
                         alt="avatar"
                         className="size-5 rounded-full"
                       />
                       <span className="font-medium text-gray-900 dark:text-white">
-                        {comment.user.name}
+                        {comment.user?.name}
                       </span>
                       <span className="text-xs text-gray-400 dark:text-zinc-600">
                         •{" "}
