@@ -6,13 +6,15 @@ import { useSearchParams } from "react-router-dom";
 import { CalendarIcon, MessageCircle, PenIcon } from "lucide-react";
 import { assets } from "../assets/assets";
 import { priorityTexts, typeIcons } from "../utils/utils";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import api from "../configs/api";
 
 const TaskDetails = () => {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
   const taskId = searchParams.get("taskId");
+  const { user } = useUser();
 
-  const user = { id: "user_1" };
   const [task, setTask] = useState(null);
   const [project, setProject] = useState(null);
   const [comments, setComments] = useState([]);
@@ -20,15 +22,31 @@ const TaskDetails = () => {
   const [loading, setLoading] = useState(true);
   const { icon: Icon, color } = typeIcons[task?.type] || {};
   const { background, prioritycolor } = priorityTexts[task?.priority] || {};
-
   const { currentWorkspace } = useSelector((state) => state.workspace);
+  const { getToken } = useAuth();
 
-  const fetchComments = async () => {};
+  const fetchComments = async () => {
+    if (!taskId) return;
+
+    try {
+      const token = await getToken();
+      const { data } = await api.get(`/api/comments/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setComments(data?.comments || []);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || error.message);
+    }
+  };
 
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
 
     try {
+      const token = await getToken();
       toast.loading("Adding comment...");
 
       //  Simulate API call
