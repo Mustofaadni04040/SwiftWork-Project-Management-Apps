@@ -21,7 +21,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const menuItems = [
     { name: "Dashboard", href: "/", icon: LayoutDashboardIcon },
     { name: "Projects", href: "/projects", icon: FolderOpenIcon },
-    { name: "Team", href: "/team", icon: UsersIcon },
+    { name: "Members", href: "/team", icon: UsersIcon },
   ];
   const { openUserProfile } = useClerk();
 

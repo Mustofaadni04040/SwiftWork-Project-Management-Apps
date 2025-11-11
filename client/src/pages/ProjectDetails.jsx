@@ -105,27 +105,38 @@ export default function ProjectDetail() {
             label: "Total Tasks",
             value: tasks.length,
             color: "text-zinc-900 dark:text-white",
+            bgLight: "bg-zinc-200",
+            bgDark: "bg-zinc-700",
           },
           {
             label: "Completed",
             value: tasks.filter((t) => t.status === "DONE").length,
             color: "text-emerald-700 dark:text-emerald-400",
+            bgLight: "bg-emerald-200",
+            bgDark: "bg-emerald-950",
           },
           {
             label: "In Progress",
             value: tasks.filter((t) => t.status === "IN_PROGRESS").length,
             color: "text-amber-700 dark:text-amber-400",
+            bgLight: "bg-amber-200",
+            bgDark: "bg-amber-950",
           },
           {
             label: "Team Members",
             value: project.members?.length || 0,
             color: "text-blue-700 dark:text-blue-400",
+            bgLight: "bg-blue-200",
+            bgDark: "bg-blue-950",
           },
         ].map((card, idx) => (
           <div
             key={idx}
-            className=" dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-zinc-200 dark:border-zinc-800 flex justify-between sm:min-w-60 p-4 py-2.5 rounded"
+            className=" dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-zinc-200 dark:border-zinc-800 flex justify-between sm:min-w-60 p-4 py-2.5 rounded relative overflow-hidden"
           >
+            <div
+              className={`${card.bgLight} dark:${card.bgDark} w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+            />
             <div>
               <div className="text-sm text-zinc-600 dark:text-zinc-400">
                 {card.label}

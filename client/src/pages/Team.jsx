@@ -37,7 +37,7 @@ const Team = () => {
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-1">
-            Team
+            Members
           </h1>
           <p className="text-gray-500 dark:text-zinc-400 text-sm">
             Manage team members and their contributions
@@ -58,7 +58,10 @@ const Team = () => {
       {/* Stats Cards */}
       <div className="flex flex-wrap gap-4">
         {/* Total Members */}
-        <div className="max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6">
+        <div className="relative max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6 overflow-hidden">
+          <div
+            className={`bg-blue-100 dark:bg-blue-500/10 w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+          />
           <div className="flex items-center justify-between gap-8 md:gap-22">
             <div>
               <p className="text-sm text-gray-500 dark:text-zinc-400">
@@ -75,7 +78,10 @@ const Team = () => {
         </div>
 
         {/* Active Projects */}
-        <div className="max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6">
+        <div className="relative max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6 overflow-hidden">
+          <div
+            className={`bg-emerald-100 dark:bg-emerald-500/10 w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+          />
           <div className="flex items-center justify-between gap-8 md:gap-22">
             <div>
               <p className="text-sm text-gray-500 dark:text-zinc-400">
@@ -96,7 +102,10 @@ const Team = () => {
         </div>
 
         {/* Total Tasks */}
-        <div className="max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6">
+        <div className="relative max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6 overflow-hidden">
+          <div
+            className={`bg-purple-100 dark:bg-purple-500/10 w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+          />
           <div className="flex items-center justify-between gap-8 md:gap-22">
             <div>
               <p className="text-sm text-gray-500 dark:text-zinc-400">
