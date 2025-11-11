@@ -162,7 +162,7 @@ const ProjectTasks = ({ tasks }) => {
         <div className="w-full">
           {/* Mobile/Card View */}
           {isMobile ? (
-            <div className="lg:hidden flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {filteredTasks.length > 0 ? (
                 filteredTasks.map((task) => {
                   const { icon: Icon, color } = typeIcons[task.type] || {};
