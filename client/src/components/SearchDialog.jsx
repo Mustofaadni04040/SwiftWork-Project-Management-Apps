@@ -38,6 +38,7 @@ export default function SearchDialog({ isDialogOpen, setIsDialogOpen }) {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         setIsDialogOpen(false);
+        setSearchTerm("");
       }
     };
 
