@@ -72,8 +72,12 @@ export default function SearchDialog({ isDialogOpen, setIsDialogOpen }) {
           </div>
         </div>
 
+        <div className="mt-4 px-4 py-3 w-full border border-gray-200 dark:border-zinc-800">
+          <p className="text-lg font-bold">Results: </p>
+        </div>
+
         {/* Search Results */}
-        <div className="mt-4 overflow-y-auto max-h-[300px]">
+        <div className="overflow-y-auto max-h-[300px]">
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project) => (
               <Link
