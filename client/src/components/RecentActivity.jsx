@@ -65,11 +65,11 @@ const RecentActivity = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="text-zinc-800 dark:text-zinc-200 truncate">
+                        <h4 className="text-sm md:text-base text-zinc-800 dark:text-zinc-200">
                           {task.title}
                         </h4>
                         <span
-                          className={`ml-2 px-2 py-1 rounded text-xs ${
+                          className={`ml-2 px-2 py-1 rounded text-[8px] sm:text-sm ${
                             statusColors[task.status] ||
                             "bg-zinc-300 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300"
                           }`}
@@ -77,7 +77,7 @@ const RecentActivity = () => {
                           {task.status.replace("_", " ")}
                         </span>
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+                      <div className="flex flex-col md:flex-row md:items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
                         <span className="capitalize">
                           {task.type.toLowerCase()}
                         </span>
