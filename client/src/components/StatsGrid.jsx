@@ -85,9 +85,7 @@ export default function StatsGrid() {
             key={i}
             className="relative bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition duration-200 rounded-md"
           >
-            <div
-              className={`${bgColor} w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
-            />
+            <div className={`${bgColor} w-2 h-full absolute left-0 top-0`} />
             <div className="p-6 py-4">
               <div className="flex items-start justify-between">
                 <div>

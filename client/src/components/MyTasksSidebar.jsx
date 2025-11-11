@@ -49,7 +49,7 @@ function MyTasksSidebar({ setIsSidebarOpen }) {
     <div className="mt-6 px-3">
       <div
         onClick={toggleMyTasks}
-        className="flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-800"
+        className="flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-800"
       >
         <div className="flex items-center gap-2">
           <CheckSquareIcon className="w-4 h-4 text-gray-500 dark:text-zinc-400" />

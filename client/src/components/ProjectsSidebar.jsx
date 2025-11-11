@@ -52,8 +52,11 @@ const ProjectSidebar = ({ setIsSidebarOpen }) => {
   return (
     <div className="mt-6 px-3">
       <div className="flex items-center justify-between px-3 py-2">
-        <h3 className="text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-          Projects
+        <h3 className="flex items-center gap-2 text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
+          Projects{" "}
+          <span className="bg-gray-200 font-normal dark:bg-zinc-700 text-gray-700 dark:text-zinc-300 text-xs px-2 py-0.5 rounded">
+            {projects.length}
+          </span>
         </h3>
         <Link to="/projects">
           <button className="size-5 text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 rounded flex items-center justify-center transition-colors duration-200">
@@ -95,7 +98,7 @@ const ProjectSidebar = ({ setIsSidebarOpen }) => {
                       className={`flex items-center gap-3 px-3 py-1.5 rounded-lg transition-colors duration-200 text-xs ${
                         isActive
                           ? "bg-green-100 text-[#0b996f] hover:bg-green-200 dark:bg-green-500/10 dark:text-[#0b996f]/90 dark:hover:bg-green-500/20"
-                          : "text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800"
+                          : "text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-zinc-800"
                       }`}
                     >
                       <subItem.icon className="size-3" />

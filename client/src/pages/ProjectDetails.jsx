@@ -135,7 +135,7 @@ export default function ProjectDetail() {
             className=" dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-zinc-200 dark:border-zinc-800 flex justify-between sm:min-w-60 p-4 py-2.5 rounded relative overflow-hidden"
           >
             <div
-              className={`${card.bgLight} dark:${card.bgDark} w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+              className={`${card.bgLight} dark:${card.bgDark} w-2 h-full absolute left-0 top-0`}
             />
             <div>
               <div className="text-sm text-zinc-600 dark:text-zinc-400">

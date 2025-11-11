@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Check, Plus } from "lucide-react";
+import { Check, Plus, ChevronsUpDown } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentWorkspace } from "../features/workspaceSlice";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,9 @@ function WorkspaceDropdown() {
             </p>
           </div>
         </div>
-        <ChevronDown className="w-4 h-4 text-gray-500 dark:text-zinc-400 flex-shrink-0" />
+        <span className="bg-white dark:bg-zinc-800 p-1 border border-gray-200 dark:border-zinc-700 rounded-md">
+          <ChevronsUpDown className="w-3 h-3 text-gray-500 dark:text-zinc-400 flex-shrink-0" />
+        </span>
       </button>
 
       {isOpen && (

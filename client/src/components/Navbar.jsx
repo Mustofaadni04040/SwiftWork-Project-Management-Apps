@@ -1,4 +1,4 @@
-import { SearchIcon, PanelLeft } from "lucide-react";
+import { SearchIcon, PanelLeft, ChevronDown } from "lucide-react";
 import { UserButton } from "@clerk/clerk-react";
 import { useState } from "react";
 import SearchDialog from "./SearchDialog";
@@ -51,7 +51,17 @@ const Navbar = ({ setIsSidebarOpen }) => {
               onClick={() => setIsDialogOpen(true)}
             />
           )}
-          <UserButton />
+          <div className="flex items-center rounded-full pl-2 pr-0 py-1 bg-[#f4f6f8] dark:bg-zinc-900">
+            <ChevronDown className="text-gray-400 dark:text-zinc-400 size-4" />
+            <UserButton
+              showName
+              appearance={{
+                elements: {
+                  userButtonBox: "text-gray-900 dark:text-white text-xs",
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

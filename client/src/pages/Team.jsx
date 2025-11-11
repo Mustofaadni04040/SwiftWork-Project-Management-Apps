@@ -60,7 +60,7 @@ const Team = () => {
         {/* Total Members */}
         <div className="relative max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6 overflow-hidden">
           <div
-            className={`bg-blue-100 dark:bg-blue-500/10 w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+            className={`bg-blue-100 dark:bg-blue-500/10 w-2 h-full absolute left-0 top-0`}
           />
           <div className="flex items-center justify-between gap-8 md:gap-22">
             <div>
@@ -80,7 +80,7 @@ const Team = () => {
         {/* Active Projects */}
         <div className="relative max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6 overflow-hidden">
           <div
-            className={`bg-emerald-100 dark:bg-emerald-500/10 w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+            className={`bg-emerald-100 dark:bg-emerald-500/10 w-2 h-full absolute left-0 top-0`}
           />
           <div className="flex items-center justify-between gap-8 md:gap-22">
             <div>
@@ -104,7 +104,7 @@ const Team = () => {
         {/* Total Tasks */}
         <div className="relative max-sm:w-full dark:bg-gradient-to-br dark:from-zinc-800/70 dark:to-zinc-900/50 border border-gray-300 dark:border-zinc-800 rounded-lg p-6 overflow-hidden">
           <div
-            className={`bg-purple-100 dark:bg-purple-500/10 w-2 h-full absolute left-0 top-0 rounded-tr-md rounded-br-md`}
+            className={`bg-purple-100 dark:bg-purple-500/10 w-2 h-full absolute left-0 top-0`}
           />
           <div className="flex items-center justify-between gap-8 md:gap-22">
             <div>

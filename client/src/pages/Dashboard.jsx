@@ -24,7 +24,7 @@ const Dashboard = () => {
           </h1>
           <p className="text-gray-500 dark:text-zinc-400 text-sm">
             {" "}
-            Here's what's happening with your projects today{" "}
+            Your Team's Success Starts Here. Let's Make Together!{" "}
           </p>
         </div>
 

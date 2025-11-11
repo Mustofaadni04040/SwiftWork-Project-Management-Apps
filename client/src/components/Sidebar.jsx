@@ -55,10 +55,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 key={item.name}
                 onClick={() => setIsSidebarOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 py-2 px-4 text-gray-800 dark:text-zinc-100 cursor-pointer rounded transition-all  ${
+                  `flex items-center gap-3 py-2 px-4 dark:text-zinc-100 cursor-pointer rounded-full transition-all  ${
                     isActive
-                      ? "bg-gray-100 dark:bg-zinc-900 dark:bg-gradient-to-br dark:from-zinc-800 dark:to-zinc-800/50  dark:ring-zinc-800"
-                      : "hover:bg-gray-50 dark:hover:bg-zinc-800/60"
+                      ? "text-white bg-gradient-to-br from-[#0b996f] to-[#0b996f]/80 dark:bg-zinc-900 dark:bg-gradient-to-br dark:from-zinc-800 dark:to-zinc-800/50 dark:ring-zinc-800 shadow-md"
+                      : "text-zinc-800 dark:text-zinc-100 hover:bg-gray-50 dark:hover:bg-zinc-800/60"
                   }`
                 }
               >
@@ -78,7 +78,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <ProjectSidebar setIsSidebarOpen={setIsSidebarOpen} />
         </div>
         {/* Theme Toggle */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 mt-5 border-t border-gray-200 dark:border-zinc-800">
           <button
             onClick={() => dispatch(toggleTheme())}
             className="size-8 flex items-center justify-center m-4 bg-white dark:bg-zinc-800 shadow rounded-lg transition hover:scale-105 active:scale-95"
